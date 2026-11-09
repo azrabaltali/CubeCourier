@@ -1,6 +1,8 @@
 using UnityEngine;
 public class Cargo : MonoBehaviour
 {
+    // light or heavy? a data file decides
+    [SerializeField] private CargoType type;
     private Rigidbody rb;
     private Collider box; // solid body
     private Collider range; // pickup trigger
@@ -11,6 +13,17 @@ public class Cargo : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         box = GetComponent<BoxCollider>();
         range = GetComponent<SphereCollider>();
+        // an empty Type slot? say it in red
+        if (type == null) Debug.LogError(name + ": no Cargo Type");
+    }
+    // two questions about this cargo, answered by its type
+    public int Points()
+    {
+        return type.Points();
+    }
+    public float Weight()
+    {
+        return type.Weight();
     }
     // a question: "can I be picked up now?"
     public bool CanBePickedUp()
